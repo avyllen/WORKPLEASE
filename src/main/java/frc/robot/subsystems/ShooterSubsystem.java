@@ -7,18 +7,20 @@ package frc.robot.subsystems;
 
 
 import edu.wpi.first.math.controller.PIDController;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
 public class ShooterSubsystem extends SubsystemBase {
-private CANSparkFlex tshooter;
-private CANSparkFlex bshooter;
+ CANSparkFlex tshooter;
+ CANSparkFlex bshooter;
+ TalonSRX feeder;
 
 PIDController pid = new PIDController(0.01, 0, 0);
 
@@ -33,6 +35,9 @@ PIDController pid = new PIDController(0.01, 0, 0);
 
 tshooter = new CANSparkFlex(Constants.ShooterConstants.tshooterID, MotorType.kBrushless);
 //bshooter = new CANSparkFlex(Constants.ShooterConstants.bshooterID, MotorType.kBrushless);
+
+//feeder = new TalonSRX(Constants.FeederConstants.feederID);
+
  }
 
 public void controlShooter(double shooterSpeed) {
@@ -44,6 +49,7 @@ public void controlShooter(double shooterSpeed) {
    //bshooter.set(-pid.calculate(position,bshooter.getPosition().getValue()));
    tshooter.set(-pid.calculate(position,tshooter.getEncoder().getPosition()));
    //bshooter.set(-pid.calculate(position,tshooter.getEncoder().getPosition()));
+
  } 
  public void resetEncoders() {
   //tshooter.setPosition(0);
@@ -51,6 +57,8 @@ public void controlShooter(double shooterSpeed) {
 
   tshooter.getEncoder().setPosition(0);
   //bshooter.getEncoder().setPosition(0);
+
+  
  }
 
  @Override

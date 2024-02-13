@@ -6,8 +6,7 @@ package frc.robot.commands.Shootercommands.ShooterPosition;
 
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotContainer;
+
 
 
 /** An example command that uses an example subsystem. */

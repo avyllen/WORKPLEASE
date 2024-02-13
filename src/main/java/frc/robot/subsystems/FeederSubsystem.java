@@ -4,52 +4,53 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-public class IntakeSubsystem extends SubsystemBase {
 
-  /** Creates a new ExampleSubsystem. */
-  //CANSparkMax BottomMotor = new CANSparkMax(Constants.DrivetrainConstants.BottomMotorCANID, CANSparkLowLevel.MotorType.kBrushless);
-//CANSparkMax TopMotor = new CANSparkMax (Constants.DrivetrainConstants.TopMotorCANID, CANSparkLowLevel.MotorType.kBrushless);
 
-TalonSRX TopMotor = new TalonSRX(Constants.DrivetrainConstants.TopMotorID);
-TalonSRX BottomMotor = new TalonSRX(Constants.DrivetrainConstants.BottomMotorID);
+public class FeederSubsystem extends SubsystemBase {
+/** Add your docs here. */
+TalonSRX leftFeeder;
+TalonSRX rightFeeder;
 
-PIDController pid = new PIDController(0.01, 0, 0);
+PIDController pid = new PIDController(0.1, 0, 0);
 
+public FeederSubsystem() {
+ leftFeeder  = new TalonSRX(Constants.FeederConstants.leftFeederID);
+ rightFeeder  = new TalonSRX(Constants.FeederConstants.rightFeederID);
+  }
 
 //CANSparkMax PivotPoint = new CANSparkMax (Constants.DrivetrainConstants.LeftBackCANID, CANSparkLowLevel.MotorType.kBrushless);
 
 // RelativeEncoder leftEncoder = LeftFrontMotor.getEncoder();
 // RelativeEncoder rightEncoder = RightFrontMotor.getEncoder();
 
-public void controlIntake(double intakeSpeed) {
+public void controlFeeder(double feederSpeed) {
 
-  TopMotor.set(TalonSRXControlMode.PercentOutput, intakeSpeed);
+    leftFeeder.set(TalonSRXControlMode.PercentOutput, feederSpeed);
+    rightFeeder.set(TalonSRXControlMode.PercentOutput, feederSpeed);
 }
-{
 
-   // TopMotor.set(ControlMode.PercentOutput, pid.calculate(TopMotor.getMotorOutputPercent()));
+public void FeederPID(double position){
 
-   // BottomMotor.set(ControlMode.PercentOutput, pid.calculate(BottomMotor.getSelectedSensorPosition(),intakeSpeed));
+   // leftFeeder.set(TalonSRXControlMode.PercentOutput, pid.calculate(leftFeeder.getMotorOutputPercent(),feederSpeed));
+   // rightFeeder.set(TalonSRXControlMode.PercentOutput, pid.calculate(rightFeeder.getMotorOutputPercent(),feederSpeed));
+    leftFeeder.set(TalonSRXControlMode.PercentOutput, pid.calculate(leftFeeder.getMotorOutputPercent()));
+    rightFeeder.set(TalonSRXControlMode.PercentOutput, pid.calculate(rightFeeder.getMotorOutputPercent()));
+
 
 }
 
 
 //DifferentialDrive differentialDrive = new DifferentialDrive(leftMotorControllerGroup, RightMotorControllerGroup);
-  public IntakeSubsystem() {
- 
-
-  //PivotPoint.restoreFactoryDefaults();
-  //LeftBackMotor.follow(LeftFrontMotor);
- 
-
-
-  }
+  
 
   /**
    * Example command factory method.
@@ -78,6 +79,9 @@ public void controlIntake(double intakeSpeed) {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Feeder Encoder", leftFeeder.getMotorOutputPercent());  
+    SmartDashboard.putNumber("Right Feeder Encoder", rightFeeder.getMotorOutputPercent());
+    
   }
 
 
@@ -86,19 +90,9 @@ public void PIDControl(double intakePosition) {
     throw new UnsupportedOperationException("Unimplemented method 'PIDControl'");
 }
 
-//   @Override
-//   public void simulationPeriodic() {
-//     // This method will be called once per scheduler run during simulation
-  //public void IntakewithJoystickCommand(double Speed1, double Speed2) {
-    
-
-   // BottomMotor.set(Speed1);
-   // TopMotor.set(Speed2);
 
     
-   public void setspeed(double speed1) {
 
   }
-}
   
  

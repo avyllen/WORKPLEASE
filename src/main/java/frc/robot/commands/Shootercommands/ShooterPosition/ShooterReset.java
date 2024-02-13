@@ -2,12 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shootercommands;
+package frc.robot.commands.Shootercommands.ShooterPosition;
 
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotContainer;
+
 
 /** An example command that uses an example subsystem. */
 public class ShooterReset extends Command {
@@ -29,7 +28,7 @@ public class ShooterReset extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("Starting intake command");
+    System.out.println("Encoder Reset");
 
   }
 

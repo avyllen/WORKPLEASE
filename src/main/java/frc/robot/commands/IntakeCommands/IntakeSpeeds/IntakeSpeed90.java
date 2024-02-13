@@ -2,34 +2,33 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shootercommands.ShooterSpeeds;
+package frc.robot.commands.IntakeCommands.IntakeSpeeds;
 
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
-
 /** An example command that uses an example subsystem. */
-public class ShooterSpeed90 extends Command {
+public class IntakeSpeed90 extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystem shooterSubsystem;
-double shooterSpeed = .9;
+  private final IntakeSubsystem intakeSubsystem;
+double intakeSpeed = 0.0;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShooterSpeed90(ShooterSubsystem shooterSubsystem) {
-    this.shooterSubsystem = shooterSubsystem;
+  public IntakeSpeed90(IntakeSubsystem intakeSubsystem) {
+    this.intakeSubsystem = intakeSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSubsystem);
+    addRequirements(intakeSubsystem);
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("<< Shooter Speed 90 >>");
+    System.out.println("Intake Speed 90");
 
   }
 
@@ -51,7 +50,7 @@ double shooterSpeed = .9;
       shooterSpeed = 0;
     }*/
     
-    shooterSubsystem.controlShooter(shooterSpeed);
+    intakeSubsystem.controlIntake(intakeSpeed);
     //testing
 
 

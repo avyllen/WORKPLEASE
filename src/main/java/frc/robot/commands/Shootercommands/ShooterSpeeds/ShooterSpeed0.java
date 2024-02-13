@@ -6,8 +6,7 @@ package frc.robot.commands.Shootercommands.ShooterSpeeds;
 
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotContainer;
+
 
 
 /** An example command that uses an example subsystem. */
@@ -30,7 +29,7 @@ double shooterSpeed = 0;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("Starting intake command");
+    System.out.println("<< Shooter Speed 0 >>");
 
   }
 

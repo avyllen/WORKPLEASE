@@ -6,24 +6,33 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.FeederCommands.FeederSpeed;
+import frc.robot.commands.FeederCommands.FeederPosition.FeederAngle50;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.IntakewithJoystickCommand;
-import frc.robot.commands.Shootercommands.ShooterReset;
+import frc.robot.commands.IntakeCommands.DefaultIntake;
+import frc.robot.commands.IntakeCommands.IntakeSpeeds.IntakeSpeed87;
+import frc.robot.commands.PivotCommands.PivotPositions.Pivot50;
+import frc.robot.commands.PivotCommands.PivotPositions.Pivot70;
+import frc.robot.commands.PivotCommands.PivotPositions.Pivot80;
+
+
 import frc.robot.commands.Shootercommands.ShooterPosition.ShooterPosition0;
 import frc.robot.commands.Shootercommands.ShooterPosition.ShooterPosition50;
 import frc.robot.commands.Shootercommands.ShooterPosition.ShooterPositionN70;
+import frc.robot.commands.Shootercommands.ShooterPosition.ShooterReset;
 import frc.robot.commands.Shootercommands.ShooterSpeeds.ShooterSpeed0;
 import frc.robot.commands.Shootercommands.ShooterSpeeds.ShooterSpeed50;
 import frc.robot.commands.Shootercommands.ShooterSpeeds.ShooterSpeed85;
 import frc.robot.commands.Shootercommands.ShooterSpeeds.ShooterSpeed90;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -34,22 +43,35 @@ import edu.wpi.first.wpilibj.Joystick;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer { 
+  {
   // The robot's subsystems and commands are defined here...
+  
+
+
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+      new CommandJoystick(OperatorConstants.kDriverControllerPort); }
+        // The robot's subsystems and commands are defined here...
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
+    
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-        // The robot's subsystems and commands are defined here...
-  private final IntakeSubsystem drivetrainSubsystem = new IntakeSubsystem();
+
+  private final PivotSubsystem pivotSubsystem = new PivotSubsystem();
+
+  private final FeederSubsystem feederSubsystem = new FeederSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final IntakewithJoystickCommand DrivewithJoystickCommand = new IntakewithJoystickCommand(drivetrainSubsystem);
+  private final DefaultIntake DrivewithJoystickCommand = new DefaultIntake(intakeSubsystem);
+
 
 public static XboxController xboxController = new XboxController(1);
 public static Joystick joystick = new Joystick(0);
 public static Object Joystick;
+public static int desiredPOV = xboxController.getPOV();
+
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -57,9 +79,9 @@ public static Object Joystick;
     // Configure the trigger bindings
     configureBindings();
     shooterSubsystem.setDefaultCommand(new ShooterSpeed0(shooterSubsystem));
-    drivetrainSubsystem.setDefaultCommand(DrivewithJoystickCommand);
-    new Trigger(drivetrainSubsystem::exampleCondition)
-    .onTrue(new IntakewithJoystickCommand(drivetrainSubsystem));
+    intakeSubsystem.setDefaultCommand(DrivewithJoystickCommand);
+    new Trigger(intakeSubsystem::exampleCondition)
+    .onTrue(new DefaultIntake(intakeSubsystem));
   }
 
   /**
@@ -79,16 +101,33 @@ public static Object Joystick;
     new JoystickButton(xboxController,3).toggleOnTrue(new ShooterSpeed85(shooterSubsystem));
     new JoystickButton(xboxController,4).toggleOnTrue(new ShooterSpeed90(shooterSubsystem));
 
-  new JoystickButton(joystick,8).toggleOnTrue(new ShooterPosition0(shooterSubsystem));
-  new JoystickButton(joystick,10).toggleOnTrue(new ShooterPosition50(shooterSubsystem));
-    new JoystickButton(joystick,12).toggleOnTrue(new ShooterPositionN70(shooterSubsystem));
-    new JoystickButton(joystick,7).toggleOnTrue(new ShooterReset(shooterSubsystem));
+  new JoystickButton(joystick,8).onTrue(new ShooterPosition0(shooterSubsystem));
+  new JoystickButton(joystick,10).onTrue(new ShooterPosition50(shooterSubsystem));
+    new JoystickButton(joystick,12).onTrue(new ShooterPositionN70(shooterSubsystem));
+    new JoystickButton(joystick,7).onTrue(new ShooterReset(shooterSubsystem));
+
 
 // CONTROLS INTAKE :>
-  // new JoystickButton(joystick, 2).toggleonTrue(new IntakeSpeed70(drivetrainSubsystem));
+new JoystickButton(joystick, 1).whileTrue(new IntakeSpeed87(intakeSubsystem));
+new JoystickButton(joystick,2).whileTrue(new FeederSpeed(feederSubsystem));
+new JoystickButton(joystick,4).whileTrue(new FeederAngle50());
+//CONTROLS PIVOT :>
+if (desiredPOV == 0) {
+new Pivot50(pivotSubsystem);
+} 
+else if (desiredPOV == 90) {
+new Pivot70(pivotSubsystem);
+} 
+else if (desiredPOV == 180) {
+  new Pivot80(pivotSubsystem);
+}
+  }
+ 
+
 
   
-  }
+
+  
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -97,6 +136,6 @@ public static Object Joystick;
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(drivetrainSubsystem);
+    return Autos.exampleAuto(intakeSubsystem);
     }
-}
+  }

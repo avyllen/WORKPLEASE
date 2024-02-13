@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import com.revrobotics.RelativeEncoder;
 
 
 /**
@@ -17,7 +16,7 @@ import com.revrobotics.RelativeEncoder;
 public final class Constants {
 
   public static final class DrivetrainConstants  {
-    public static final int TopMotorID = 57;
+    public static final int TopMotorID = 8;
     public static final int BottomMotorID = 2;
   }
 
@@ -25,6 +24,15 @@ public final class Constants {
 
     public static final int tshooterID = 37;
     public static final int bshooterID = 1;
+  }
+  
+  public static final class FeederConstants{
+    public static final int leftFeederID = 19;
+    public static final int rightFeederID = 20;
+  }
+
+  public static final class PivotConstants{
+    public static final int pivotMotorID = 57;
   }
 
   public static class OperatorConstants {

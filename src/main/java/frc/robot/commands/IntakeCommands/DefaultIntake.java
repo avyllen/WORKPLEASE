@@ -2,15 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.IntakeCommands;
 
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 /** An example command that uses an example subsystem. */
-public class IntakewithJoystickCommand extends Command {
+public class DefaultIntake extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem DrivetrainSubsystem;
     double BottomMotor = 0;
@@ -21,7 +19,7 @@ public class IntakewithJoystickCommand extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public IntakewithJoystickCommand(IntakeSubsystem subsystem) {
+  public DefaultIntake(IntakeSubsystem subsystem) {
     this.DrivetrainSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(DrivetrainSubsystem);
